@@ -123,6 +123,9 @@ PGM *filter(PGM *pgm, int filt_size, int parallel)
   }
 
   int i;
+  
+  double starttime, stoptime;
+  starttime = omp_get_wtime(); 
 
   omp_set_num_threads(parallel);
 	#pragma omp parallel private ( i )
@@ -149,8 +152,12 @@ PGM *filter(PGM *pgm, int filt_size, int parallel)
       pgm1->data[i][j] = (char)e;
     }
   }
+  stoptime = omp_get_wtime();
+
+  printf("Tempo de execucao: %3.2f segundos\n", stoptime-starttime);
   return pgm1;
 }
+
 
 int main(int argc, char *argv[])
 {
